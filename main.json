@@ -1,0 +1,64 @@
+{
+    "rules": {
+        "name": "default",
+        "options": {
+            "is_secure": false
+        },
+        "behaviors": [
+            {
+            "name": "origin",
+            "options": {
+                "originType": "CUSTOMER", 
+                "hostname": "fb264146261c.mylabserver.com", 
+                "forwardHostHeader": "REQUEST_HOST_HEADER", 
+                "cacheKeyHostname": "REQUEST_HOST_HEADER", 
+                "compress": true, 
+                "enable_true_client_ip": true,
+                "httpPort": 80 ,
+                "httpsPort": 443
+            }
+            },
+            {
+            "name": "cpCode", 
+            "options": {
+                "value": {
+                    "id": 1882011, 
+                    "name": "hvd-lab-stuff"
+                }
+            }
+            },
+            {
+            "name": "caching",
+            "options": {
+                "behavior": "NO_STORE"
+            }
+         }
+        ],
+        "children": [
+            {
+            "name": "Compress Text Content",
+            "behaviors": [
+                {
+                "name": "gzipResponse",
+                "options": { "behavior": "ALWAYS" }
+                }
+            ],
+            "criteria": [
+                {
+                "name": "contentType",
+                "options": {
+                    "matchOperator": "IS_ONE_OF",
+                    "matchWildcard": true,
+                    "matchCaseSensitive": false,
+                    "values": [
+                    "text/html*",
+                    "text/css*",
+                    "application/x-javascript*"
+                    ]
+                }
+                }
+            ]
+            }
+        ]
+     }
+}
