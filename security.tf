@@ -18,8 +18,22 @@ resource "akamai_appsec_security_policy" "my-sec-policy" {
 
 // match target
 
-resource "akamai_appsec_aap_selected_hostnames" "my_aap_selected_hostnames" {
-  config_id = resource.akamai_appsec_configuration.my_security_configuration.id
-  protected_hosts = resource.akamai_appsec_configuration.my_security_configuration.host_names
-  security_policy_id = akamai_appsec_security_policy.my-sec-policy.security_policy_id
+resource "akamai_appsec_match_target" "my-match-target" {
+  config_id    = resource.akamai_appsec_configuration.my_security_configuration.id
+  match_target = jsonencode(
+    {
+      "type": "website",
+      "isNegativePathMatch": false,
+      "isNegativeFileExtensionMatch": false,
+      "hostnames": [
+        "www.hvdtflab.com",
+      ],
+      "filePaths": [
+        "/*"
+      ],
+      "securityPolicy": {
+        "policyId": akamai_appsec_security_policy.my-sec-policy.security_policy_id
+      }
+    }
+  )
 }

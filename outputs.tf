@@ -33,5 +33,13 @@ output "output_appsec_config_id" {
 }
 
 output "output_securitypolicy_details" {
-    value = resource.akamai_appsec_security_policy.my-sec-policy
+    value = akamai_appsec_security_policy.my-sec-policy
+}
+
+output "output_msc_hostname" {
+    value = akamai_appsec_configuration.my_security_configuration.host_names
+}
+
+output "output_firstvariable" {
+  value = var.firstvar
 }
