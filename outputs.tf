@@ -43,3 +43,7 @@ output "output_msc_hostname" {
 output "output_firstvariable" {
   value = var.firstvar
 }
+
+output "output_locals" {
+  value = local.notes
+}

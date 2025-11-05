@@ -26,3 +26,7 @@ data "akamai_property" "my_tf_property" {
   name =  resource.akamai_property.my-tf-property.name
   version = resource.akamai_property.my-tf-property.latest_version
 }
+
+locals {
+  notes = join("-", ["TF-3001", "${data.akamai_group.my_group.id}"])
+}
