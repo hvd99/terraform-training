@@ -40,10 +40,14 @@ output "output_msc_hostname" {
     value = akamai_appsec_configuration.my_security_configuration.host_names
 }
 
-output "output_firstvariable" {
-  value = var.firstvar
-}
+  # output "output_firstvariable" {
+  #   value = var.firstvar
+  # }
 
 output "output_locals" {
   value = local.notes
+}
+
+output "output_exampledomains" {
+  value = local.apps_hostnames
 }

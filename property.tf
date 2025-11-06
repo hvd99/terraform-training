@@ -18,7 +18,16 @@ resource "akamai_property" "my-tf-property" {
       cname_from = "www.hvdtflab.com"
       cname_to = "hvdtflab.com.edgesuite.net"
       cert_provisioning_type = "CPS_MANAGED"
-        }
+    }
+
+    dynamic "hostnames" {
+      for_each = local.apps_hostnames
+      content {
+        cname_from = hostnames.value
+        cname_to = "hvdtflab.com.edgesuite.net"
+        cert_provisioning_type = "CPS_MANAGED"
+      }
+    }
     rules       = data.akamai_property_rules_template.template-update.json
 }
 
@@ -29,4 +38,15 @@ resource "akamai_property_activation" "my_staging_activation" {
   version     = resource.akamai_property.my-tf-property.latest_version
   network     = "staging"
   note        = "Activating my property on staging via terraform"
+  depends_on = [ akamai_property.my-tf-property ]
+}
+
+#--Practice below---------------------------
+
+variable "example_domains" {
+  default = [ "www", "api", "blog", "shop", "cdn"]
+}
+
+locals {
+  apps_hostnames = [for domain in var.example_domains : "${domain}.hvdtflab.com"]
 }
